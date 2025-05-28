@@ -1,20 +1,48 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>jitCall</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-card *ngIf="currentUserProfile$ | async as userProfile">
+    <ion-card-header>
+      <ion-card-title>Bienvenido, {{ userProfile.name }} {{ userProfile.lastName }}</ion-card-title>
+      <ion-card-subtitle>{{ userProfile.email }} | {{ userProfile.phone }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tus Contactos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngIf="(contacts$ | async)?.length === 0">
+          <ion-label>No tienes contactos aún. ¡Añade uno!</ion-label>
+        </ion-item>
+        <ion-item *ngFor="let contact of (contacts$ | async)">
+          <ion-label>
+            <h2>{{ contact.name }} {{ contact.lastName }}</h2>
+            <p>{{ contact.phone }}</p>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="primary" (click)="callContact(contact)">
+              <ion-icon name="call"></ion-icon>
+              Llamar
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="block" class="ion-margin-top" (click)="navigateToAddContact()">
+        <ion-icon slot="start" name="person-add-outline"></ion-icon>
+        Añadir Contacto
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

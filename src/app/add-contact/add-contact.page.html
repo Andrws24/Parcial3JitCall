@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Añadir Contacto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="addContactForm" (ngSubmit)="addContact()">
+    <ion-item>
+      <ion-label position="floating">Número de Teléfono del Contacto</ion-label>
+      <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+    </ion-item>
+    <div *ngIf="addContactForm.get('phoneNumber')?.invalid && addContactForm.get('phoneNumber')?.touched" class="error-message">
+      <p *ngIf="addContactForm.get('phoneNumber')?.errors?.required">El número de teléfono es obligatorio.</p>
+      <p *ngIf="addContactForm.get('phoneNumber')?.errors?.pattern">Ingresa un número de teléfono válido (solo dígitos).</p>
+    </div>
+
+    <ion-button expand="block" type="submit" [disabled]="addContactForm.invalid" class="ion-margin-top">
+      Buscar y Añadir
+    </ion-button>
+  </form>
+</ion-content>

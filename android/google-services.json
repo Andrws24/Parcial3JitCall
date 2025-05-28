@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "178072816886",
+    "project_id": "parcial2-jitcall",
+    "storage_bucket": "parcial2-jitcall.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178072816886:android:d5d92ddfff41331e9bb0d7",
+        "android_client_info": {
+          "package_name": "com.company.appjitcall"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO2kiqpSECW7mcq6CFygiSLNSNNw5w9iE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
