@@ -20,15 +20,24 @@ import { Drivers } from '@ionic/storage';
 // Custom Interceptor
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
+// Supabase imports
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { supabaseConfig } from './supabase.config'; // Importa tu archivo de configuración de Supabase
+
+// Proveedor de Supabase
+export function initializeSupabase(): SupabaseClient {
+  return createClient(supabaseConfig.supabaseUrl, supabaseConfig.supabaseAnonKey);
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    FormsModule, // Required for template-driven forms
-    ReactiveFormsModule, // Required for reactive forms
-    HttpClientModule, // Required for making HTTP requests
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
 
     // Firebase Module Initialization
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -37,17 +46,21 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
     // Ionic Storage Module Initialization
     IonicStorageModule.forRoot({
-      name: 'jitcall_db', // Database name for Ionic Storage
-      driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage] // Preferred storage drivers
+      name: 'jitcall_db',
+      driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
     })
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    // Register the AuthInterceptor
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true // Allows multiple interceptors if needed
+      multi: true
+    },
+    // Proveedor de Supabase
+    {
+      provide: SupabaseClient,
+      useFactory: initializeSupabase
     }
   ],
   bootstrap: [AppComponent],

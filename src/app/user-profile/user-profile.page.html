@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="profile-header ion-text-center">
+    <img [src]="selectedPhotoBase64 || profilePhotoUrl" alt="Foto de perfil" class="profile-photo" (click)="selectPhoto()">
+    <ion-button fill="clear" (click)="selectPhoto()">
+      <ion-icon slot="start" name="camera-outline"></ion-icon>
+      Cambiar Foto
+    </ion-button>
+  </div>
+
+  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched" class="error-message">
+      <p *ngIf="profileForm.get('name')?.errors?.required">El nombre es obligatorio.</p>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input type="text" formControlName="lastName"></ion-input>
+    </ion-item>
+    <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="error-message">
+      <p *ngIf="profileForm.get('lastName')?.errors?.required">El apellido es obligatorio.</p>
+    </div>
+
+    <ion-button expand="block" type="submit" [disabled]="profileForm.invalid" class="ion-margin-top">
+      Actualizar Perfil
+    </ion-button>
+  </form>
+</ion-content>

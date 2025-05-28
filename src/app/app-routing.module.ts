@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'add-contact',
     loadChildren: () => import('./add-contact/add-contact.module').then( m => mm.AddContactPageModule),
     canActivate: [AuthGuard] // Protect adding contacts
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   }
   // You will add more routes here as you develop more features
 ];
